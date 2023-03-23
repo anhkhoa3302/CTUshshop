@@ -1,0 +1,45 @@
+﻿@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+<div class="container" style="min-height:800px">
+    <h2>Quản lý website của bạn</h2>
+    <div>
+        <h4>Danh mục</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-3">
+                <ul class="nav nav-pills flex-column">
+                    <li class="nav-item"><a class="nav-link" href='/Admin'><i class="fa-solid fa-table-columns"></i>&nbsp;Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href='/Admin/Users'><i class="fa-solid fa-user"></i>&nbsp;Quản lý người dùng</a></li>
+                    <li class="nav-item"><a class="nav-link" href='/Admin/Reports'><i class="fa-solid fa-flag"></i>&nbsp;Quản lý phản hồi</a></li>
+                    <li class="nav-item"><a class="nav-link" href='/Admin/Products'><i class="fa-solid fa-laptop"></i>&nbsp;Quản lý sản phẩm</a></li>
+                    <li class="nav-item"><a class="nav-link" href='/Admin/Orders'><i class="fa-solid fa-receipt"></i>&nbsp;Quản lý đơn hàng</a></li>
+                    <li class="nav-item"><a class="nav-link" href='/Admin/Categories'><i class="fa-solid fa-bars"></i>&nbsp;Quản lý loại</a></li>
+                    <li class="nav-item"><a class="nav-link" href='/Admin/Administrator/ListRole'><i class="fa-solid fa-lock"></i>&nbsp;Quản lý phân quyền</a></li>
+                </ul>
+            </div>
+            <div class="col-md-9">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+    <script>
+        $(function () {
+            var current = location.pathname;
+            $('.nav-pills li a').each(function () {
+                var $this = $(this);
+                if (current.indexOf($this.attr('href')) !== -1) {
+                    $('.nav-pills li a').removeClass('active');
+                    $this.addClass('active');
+                }
+            })
+        })
+    </script>
+}

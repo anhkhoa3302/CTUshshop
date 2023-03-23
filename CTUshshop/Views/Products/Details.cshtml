@@ -1,0 +1,89 @@
+﻿@model CTUshshop.Models.Product
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<partial name="~/Views/Shared/_HeroPartial.cshtml" />
+<partial name="~/Views/Shared/_BreadcrumbPartial.cshtml" />
+<section class="product spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="product__details__pic">
+                    <div class="product__details__pic">
+                        <div class="product__details__pic__item">
+                            @foreach (var item in Model.ProductImg)
+                            {
+                                var imgUrl = "/files/" + Model.User.UserName + "/images/" + item.Img;
+                                <img class="product__details__pic__item--large" src="@imgUrl" alt="">
+                                break;
+                            }
+
+                        </div>
+                        <div class="product__details__pic__slider owl-carousel">
+                            @{
+                                foreach (var item in Model.ProductImg)
+                                {
+                                    var imgUrl = "/files/" + Model.User.UserName + "/images/" + item.Img;
+                                    <img data-imgbigurl="@imgUrl" src="@imgUrl" alt="">
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="product__details__text">
+                    <h3>@Model.Title</h3>
+
+
+                    <h5>@Model.Summary</h5>
+
+                    <p>
+                        @Model.Content
+                    </p>
+
+                    <div class="product__details__price">@Model.Price.ToString("#,##")&nbsp;<i class="fa-sharp fa-solid fa-dong-sign"></i></div>
+
+                    <ul class="tag" id="tagList" style="min-height:70px;">
+                        @foreach (var cat in ViewBag.Categories)
+                        {
+                            <li>@cat.Title</li>
+                        }
+                    </ul>
+                    <form asp-controller="ShoppingCart" asp-area="" asp-action="AddToCart2" method="post">
+                        <input type="hidden" value="@Model.Id" name="id" />
+                        <div class="product__details__quantity">
+                            <div class="quantity">
+                                <div class="pro-qty">
+                                    <input name="quantity" type="text" value="1">
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="primary-btn">Thêm vào giỏ</button>
+                    </form>
+                    
+
+
+
+
+                    <ul>
+                        <li><b>Số lượng</b> <span>@Model.Quantity</span></li>
+                        <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>
+                        <li><b>Người đăng</b> <span>@Model.User.UserName</span></li>
+                        <li>
+                            <b>Share on</b>
+                            <div class="share">
+                                <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                                <a href="#"><i class="fa-brands fa-square-facebook"></i></a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

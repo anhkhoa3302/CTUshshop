@@ -1,0 +1,173 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Areas/Identity/Pages/_AuthLayout.cshtml";
+}
+
+<form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label asp-for="Input.UserName"></label>
+                <input asp-for="Input.UserName" class="form-control" />
+                <span asp-validation-for="Input.UserName" class="text-danger"></span>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label asp-for="Input.Email"></label>
+                <input asp-for="Input.Email" class="form-control" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label asp-for="Input.FirstName"></label>
+                <input asp-for="Input.FirstName" class="form-control" />
+                <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <label asp-for="Input.MiddleName"></label>
+                <input asp-for="Input.MiddleName" class="form-control" />
+                <span asp-validation-for="Input.MiddleName" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <label asp-for="Input.LastName"></label>
+                <input asp-for="Input.LastName" class="form-control" />
+                <span asp-validation-for="Input.LastName" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="Input.Password"></label>
+                <input asp-for="Input.Password" class="form-control" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="Input.ConfirmPassword"></label>
+                <input asp-for="Input.ConfirmPassword" class="form-control" />
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-4">
+            <label asp-for="Input.ProvinceId"></label>
+            <select id="ProvinceList" asp-for="Input.ProvinceId" class="form-control" asp-items="ViewBag.ProvinceId">
+                <option value="-1">Select Province</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="Input.DistrictId"></label>
+            <select id="DistrictList" asp-for="Input.DistrictId" class="form-control" asp-items="ViewBag.DistrictId">
+
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="Input.WardId"></label>
+            <select id="WardList" asp-for="Input.WardId" class="form-control" asp-items="ViewBag.WardId">
+
+            </select>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <label asp-for="Input.Address"></label>
+            <input asp-for="Input.Address" class="form-control" />
+            <span asp-validation-for="Input.Address" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col mt-3">
+            <button type="submit" class="btn btn-primary btn-block">Register</button>
+        </div>
+    </div>
+
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+
+    <script>
+        $(document).ready(
+            function () {
+                $("#ProvinceList").on("change", function () {
+
+                    $.ajax({
+                        type: "Post",
+                        url: "/Address/GetDistrict",
+                        data: { "ProvinceId": $("#ProvinceList").val() },
+                        success: function (response) {
+                            var items = '';
+                            var empty = '';
+                            $(response).each(function () {
+                                items += "<option value=" + this.value + ">" + this.text + "</option>";
+                            })
+                            $("#DistrictList").html(items);
+                            $("#WardList").html(empty);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+
+                })
+            }
+        );
+        $(document).ready(
+            function () {
+                $("#DistrictList").on("change", function () {
+
+                    $.ajax({
+                        type: "Post",
+                        url: "/Address/GetWard",
+                        data: { "DistrictId": $("#DistrictList").val() },
+                        success: function (response) {
+                            var items = '';
+                            $(response).each(function () {
+                                items += "<option value=" + this.value + ">" + this.text + "</option>";
+                            })
+                            $("#WardList").html(items);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+
+                })
+            }
+        );
+    </script>
+}

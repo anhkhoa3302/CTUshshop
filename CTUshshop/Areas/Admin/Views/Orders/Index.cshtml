@@ -1,0 +1,67 @@
+﻿@model IEnumerable<CTUshshop.Models.Order>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Quản lý đơn hàng</h1>
+
+<table class="table" id="dataTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GrandTotal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        var rowType = "table-light";
+        if (item.Status == 0) rowType = "table-danger";
+        else if (item.Status == 1) rowType = "table-warning";
+        else if (item.Status == 2) rowType = "table-success";
+        <tr class="@rowType">
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @item.GrandTotal.ToString("#,###.#")&nbsp;<i class="fa-sharp fa-solid fa-dong-sign"></i>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.UserName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id" title="Edit"><i class="fa-solid fa-pen"></i></a>
+                <a asp-action="Details" asp-route-id="@item.Id" title="Details"><i class="fa-solid fa-info"></i></a>
+                <a asp-action="Delete" asp-route-id="@item.Id" title="Delete"><i class="fa-solid fa-trash-can"></i></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

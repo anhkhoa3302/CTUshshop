@@ -1,0 +1,119 @@
+﻿@page
+@model CTUshshop.Areas.Identity.Pages.Account.Manage.UserOrdersModel
+@{
+    ViewData["Title"] = "Đơn hàng";
+    ViewData["ActivePage"] = ManageNavPages.UserOrders;
+}
+<h4>@ViewData["Title"]</h4>
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+<div class="container">
+    <div class="table-responsive">
+        <table class="table custom-table" id="dataTable">
+            <thead>
+                <tr>
+                    <th scope="col">
+                        Ngày đặt
+                    </th>
+                    <th scope="col">
+                        Địa chỉ
+                    </th>
+                    <th scope="col">
+                        Tổng giá
+                    </th>
+                    <th scope="col">
+                        Trạng thái
+                    </th>
+                    <th scope="col">
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Orders)
+                {
+                    var rowType = "table-light";
+                    if (item.Status == 0) rowType = "table-danger";
+                    else if (item.Status == 1) rowType = "table-warning";
+                    else if (item.Status == 2) rowType = "table-success";
+                    <tr class="@rowType">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreatedAt)
+                        </td>
+                        <td style="max-width:200px;" class="text-nowrap">
+                            @Html.DisplayFor(modelItem => item.Address)
+                        </td>
+                        <td>
+                            <b>@item.GrandTotal.ToString("#,##.#")</b>&nbsp;<i class="fa-sharp fa-solid fa-dong-sign"></i>
+                        </td>
+                        @if(item.Status == 0)
+                        { 
+                            <td>
+                                Chưa nhận đơn hàng
+                            </td>
+                        }
+                        else if(item.Status == 1)
+                        {
+                            <td>
+                                Đang giao hàng
+                            </td>
+                        }
+                        else if(item.Status == 2)
+                        {
+                            <td>
+                                Đã giao hàng
+                            </td>
+                        }
+
+                        <td>
+                            <a asp-page="./UserOrdersDetails" asp-route-id="@item.Id"><span title="Info"><i class="fa-solid fa-info"></i></span></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@*<div class="container">
+
+    @if (Model.pager.TotalPages > 0)
+    {
+        <ul class="pagination justify-content-end">
+
+            @if (Model.pager.CurrentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-page="./UserProducts" asp-route-pg="1">First</a>
+                </li>
+                <li>
+                    <a class="page-link" asp-page="./UserProducts" asp-route-pg="@(Model.pager.CurrentPage - 1)">Previous</a>
+                </li>
+            }
+
+
+            @for (var pge = Model.pager.StartPage; pge <= Model.pager.EndPage; pge++)
+            {
+                <li class="page-item @(pge==Model.pager.CurrentPage ? "active" : "")">
+                    <a class="page-link" asp-page="./UserProducts" asp-route-pg="@pge">@pge</a>
+                </li>
+            }
+
+
+            @if (Model.pager.CurrentPage < Model.pager.TotalPages)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-page="./UserProducts" asp-route-pg="@(Model.pager.CurrentPage+1)">Next</a>
+                </li>
+                <li>
+                    <a class="page-link" asp-page="./UserProducts" asp-route-pg="@(Model.pager.TotalPages)">Last</a>
+                </li>
+            }
+        </ul>
+    }
+
+</div>*@
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

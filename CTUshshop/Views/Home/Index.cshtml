@@ -1,0 +1,20 @@
+﻿@model IEnumerable<CTUshshop.Models.Product>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+<partial name="~/Views/Shared/_HeroPartial.cshtml" />
+<div class="container pb-lg-5">
+    <div class="row">
+        <div class="col-lg w-100">
+            <div class="hero__item set-bg" data-setbg="files/banner.png">
+                <div class="hero__text">
+                    <span>CTU sh SHOP</span>
+                    <h2>@*CTU sh SHOP <br />*@Xin chào!</h2>
+                    <a asp-area="" asp-controller="Products" asp-action="Index" class="btn btn-primary">SHOP NOW</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,100 @@
+﻿@page
+@model CTUshshop.Areas.Identity.Pages.Account.Manage.DetailUserProductsModel
+@{
+    ViewData["Title"] = "Product Details";
+    ViewData["ActivePage"] = ManageNavPages.UserProducts;
+}
+
+<h4>@ViewData["Title"]</h4>
+
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+<div class="container pb-5 mb-5">
+    <dl class="row">
+        <dt class = "col-sm-2">
+            Owner
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.Username
+        </dd>
+        <dt class = "col-sm-2">
+            Title
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.Title
+        </dd>
+        <dt class = "col-sm-2">
+            Summary
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.Summary
+        </dd>
+        <dt class = "col-sm-2">
+            Content
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.Content
+        </dd>
+        <dt class = "col-sm-2">
+            Price
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.Price
+        </dd>
+        <dt class = "col-sm-2">
+            Quantity
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.Quantity
+        </dd>
+        <dt class = "col-sm-2">
+            Unit
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.Unit
+        </dd>
+        <dt class = "col-sm-2">
+            Category
+        </dt>
+        <dd class="col-sm-10">
+            <div class="categories-box">
+                <ul id="tagList" style="min-height:70px;">
+                    @foreach (var cat in Model.productCategories)
+                    {
+                        <li>@cat.Title</li>
+                    }
+                </ul>
+            </div>
+            
+           
+        </dd>
+        <dt class = "col-sm-2">
+            Images
+        </dt>
+        <dd class="col-sm-10">
+            @foreach (var image in Model.Images)
+            {
+                string imgPath = "/files/" + Model.Username + "/images/" + image.Img;
+                <img src="@imgPath" height="50" width="50" />
+            }
+        </dd>
+        <dt class = "col-sm-2">
+            Created At
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.CreatedAt
+        </dd>
+        <dt class = "col-sm-2">
+            Updated At
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.UpdatedAt
+        </dd>
+    </dl>
+    <div class="row">
+        <a asp-page="./UserProducts" class="btn btn-primary m-3 w-100">Back to Product List</a>
+    </div>
+</div>
+
+
+

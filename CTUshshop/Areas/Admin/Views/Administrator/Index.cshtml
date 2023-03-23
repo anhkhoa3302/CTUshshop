@@ -1,0 +1,130 @@
+﻿@{
+    ViewData["Title"] = "Create Role";
+}
+<div class="content">
+    <div class="row">
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col-5 col-md-4">
+                            <div class="icon-big text-center icon-warning">
+                                <i class="fa-solid fa-globe text-warning"></i>
+                            </div>
+                        </div>
+                        <div class="col-7 col-md-8">
+                            <div class="numbers">
+                                <p class="card-category">Lưu lượng</p>
+                                <p class="card-title">0GB<p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer ">
+                    <hr>
+                    <div class="stats">
+                        <i class="fa fa-refresh"></i>
+                        Cập nhật
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col-5 col-md-4">
+                            <div class="icon-big text-center icon-warning">
+                                <i class="fa-solid fa-money-bill-transfer text-success"></i>
+                            </div>
+                        </div>
+                        <div class="col-7 col-md-8">
+                            <div class="numbers">
+                                <p class="card-category">Thu nhập</p>
+                                <p class="card-title">0&nbsp;<i class="fa-sharp fa-solid fa-dong-sign"></i><p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer ">
+                    <hr>
+                    <div class="stats">
+                        <i class="fa fa-calendar-o"></i>
+                        Ngày qua
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col-5 col-md-4">
+                            <div class="icon-big text-center icon-warning">
+                                <i class="fa-solid fa-triangle-exclamation text-danger"></i>
+                            </div>
+                        </div>
+                        <div class="col-7 col-md-8">
+                            <div class="numbers">
+                                <p class="card-category">Phản hồi</p>
+                                <p class="card-title">0<p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer ">
+                    <hr>
+                    <div class="stats">
+                        <i class="fa fa-clock-o"></i>
+                        Ngày qua
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card ">
+                <div class="card-header ">
+                    <h5 class="card-title">Các hoạt động của người dùng</h5>
+                    <p class="card-category">Trong 24 giờ qua</p>
+                </div>
+                <div class="card-body ">
+                    <canvas id=chartHours width="400" height="100"></canvas>
+                </div>
+                <div class="card-footer ">
+                    <hr>
+                    <div class="stats">
+                        <i class="fa fa-history"></i>Cập nhật trong 3 phút
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card ">
+                <div class="card-header ">
+                    <h5 class="card-title">Thống kê hóa đơn</h5>
+                    <p class="card-category">Trong vòng 1 tháng</p>
+                </div>
+                <div class="card-body ">
+                    <canvas id="chartEmail"></canvas>
+                </div>
+                <div class="card-footer ">
+                    <div class="legend">
+                        <i class="fa fa-circle text-primary"></i> Đặt
+                        <i class="fa fa-circle text-warning"></i> Đang giao
+                        <i class="fa fa-circle text-danger"></i> Đã hủy
+                        <i class="fa fa-circle text-success"></i> Đã giao
+                    </div>
+                    <hr>
+                    <div class="stats">
+                        <i class="fa fa-calendar"></i> Tổng số lượng đơn hàng
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

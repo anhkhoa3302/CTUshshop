@@ -1,0 +1,150 @@
+﻿@page
+@model CTUshshop.Areas.Identity.Pages.Account.Manage.UserProductsModel
+@{
+    ViewData["Title"] = "User's Products";
+    ViewData["ActivePage"] = ManageNavPages.UserProducts;
+
+    int pageNo = 0;
+    if (ViewData["Pager"] != null)
+    {
+        pageNo = Model.pager.CurrentPage;
+    }
+
+}
+
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+
+<div class="container">
+    <h4 class="d-flex justify-content-center">@ViewData["Title"]</h4>
+    <a asp-page="./AddUserProducts" class="btn btn-primary mb-2"><span title="Add product"><i class="fa-sharp fa-solid fa-plus"></i></span></a>
+    <div class="table table-responsive">
+        <table class="table custom-table" id="dataTable">
+            <thead>
+                <tr>
+                    <th scope="col">
+                        Title
+                    </th>
+                    <th scope="col">
+                        Price
+                    </th>
+                    <th scope="col">
+                        Summary
+                    </th>
+                    <th scope="col">
+                        Image
+                    </th>
+                    <th scope="col">
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ProductList)
+                {
+                    var rowType = "";
+                    if (item.Status == 0) rowType = "table-secondary";
+                    <tr class="@rowType">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                        <td>
+                            <b>@item.Price.ToString("#,##.#")</b>&nbsp;<i class="fa-sharp fa-solid fa-dong-sign"></i>
+                        </td>
+                        <td class="text-wrap overflow-hidden" style="max-width:400px;">
+                            @Html.DisplayFor(modelItem => item.Summary)
+                            <small class="d-block">@Html.DisplayFor(modelItem => item.Content)</small>
+                        </td>
+                        <td>
+                            <ul class="persons">
+                                @{
+                                    int count = 0;
+                                    foreach (var image in item.ProductImg)
+                                    {
+                                        if (count > 2) break;
+                                        string imgPath = "/files/" + Model.Username + "/images/" + image.Img;
+                                        <li>
+                                            <a href="#">
+                                                <img src="@imgPath" alt="Person" class="img-fluid" />
+                                            </a>
+
+                                        </li>
+                                        count++;
+                                    }
+                                }
+                                @{
+                                    <li>
+                                        <a href="#">
+                                            <img src="~/files/more.png" alt="Person" class="img-fluid" />
+                                        </a>
+
+                                    </li>
+                                }
+                            </ul>
+                        </td>
+
+                        <td>
+                            <a asp-page="./EditUserProducts" asp-route-id="@item.Id"><span title="Edit"><i class="fa-solid fa-pen-to-square"></i></span></a> |
+                            <a asp-page="./DetailUserProducts" asp-route-id="@item.Id"><span title="Info"><i class="fa-solid fa-info"></i></span></a>  |
+                            @{
+                                var url = "/Products/productVisibility?id=" + item.Id;
+                                if (item.Status == 1)
+                                {
+                                    <span title="Visible"><i class="fa-solid fa-eye"></i></span>
+                                }
+                                else if (item.Status == 0)
+                                {
+                                    <span title="Not Visible"><i class="fa-solid fa-eye-slash"></i></span>
+                                }
+                            }
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@*<div class="container">
+
+    @if (Model.pager.TotalPages > 0)
+    {
+        <ul class="pagination justify-content-end">
+
+            @if (Model.pager.CurrentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-page="./UserProducts" asp-route-pg="1">First</a>
+                </li>
+                <li>
+                    <a class="page-link" asp-page="./UserProducts" asp-route-pg="@(Model.pager.CurrentPage - 1)">Previous</a>
+                </li>
+            }
+
+
+            @for (var pge = Model.pager.StartPage; pge <= Model.pager.EndPage; pge++)
+            {
+                <li class="page-item @(pge==Model.pager.CurrentPage ? "active" : "")">
+                    <a class="page-link" asp-page="./UserProducts" asp-route-pg="@pge">@pge</a>
+                </li>
+            }
+
+
+            @if (Model.pager.CurrentPage < Model.pager.TotalPages)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-page="./UserProducts" asp-route-pg="@(Model.pager.CurrentPage+1)">Next</a>
+                </li>
+                <li>
+                    <a class="page-link" asp-page="./UserProducts" asp-route-pg="@(Model.pager.TotalPages)">Last</a>
+                </li>
+            }
+        </ul>
+    }
+
+</div>*@
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

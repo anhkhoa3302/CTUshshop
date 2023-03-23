@@ -1,0 +1,28 @@
+﻿@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{ 
+    JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+    {
+        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+    };
+    var session = HttpContextAccessor.HttpContext.Session;
+    var jsoncart = session.GetString("cart");
+    List<CartItem> cartItems;
+    var count = 0;
+    if (jsoncart != null)
+    {
+        cartItems = JsonConvert.DeserializeObject<List<CartItem>>(jsoncart);
+        count = cartItems.Count;
+    }
+    ViewBag.CartCount = count;
+
+}
+
+<div class="header__cart">
+    <ul>
+        <li><a href="#"><i class="fa-solid fa-envelope"></i> <span>0</span></a></li>
+        <li><a asp-area="" asp-controller="ShoppingCart" asp-action="Index"><i class="fa fa-shopping-bag"></i> <span id="Cart_Amount">@ViewBag.CartCount</span></a></li>
+    </ul>
+</div>

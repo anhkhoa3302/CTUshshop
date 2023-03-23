@@ -1,0 +1,68 @@
+﻿@model CTUshshop.Models.Order
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container pb-lg-5">
+    <div class="row">
+        <p>Ngày đặt: @Model.CreatedAt</p>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="shoping__cart__table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="shoping__product">Products</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ViewBag.OrderItem)
+                        {
+                            var imgUrl = "/files/" + Model.User.UserName + "/images/";
+                            foreach (var img in item.Product.ProductImg)
+                            {
+                                imgUrl += img.Img;
+                                break;
+                            }
+                            <tr>
+                                <td class="shoping__cart__item">
+                                    <img src="@imgUrl" alt="" style="width:100px; height:100px;">
+                                    <h5>@item.Product.Title</h5>
+                                </td>
+                                <td class="shoping__cart__price">
+                                    @item.Product.Price.ToString("#,###.#") &nbsp;<i class="fa-sharp fa-solid fa-dong-sign"></i>
+                                </td>
+                                <td class="shoping__cart__price">
+                                    @item.Quantity
+                                </td>
+                                <td class="shoping__cart__total">
+                                    @(item.TotalPrice.ToString("#,###.#"))&nbsp;<i class="fa-sharp fa-solid fa-dong-sign"></i>
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="shoping__checkout">
+                <ul>
+                    <li>Shipping <span>15,000&nbsp;<i class="fa-sharp fa-solid fa-dong-sign"></i></span></li>
+                    <li>Total <span>>@Model.GrandTotal&nbsp;<i class="fa-sharp fa-solid fa-dong-sign"></i></span></li>
+                </ul>
+                <a asp-area="Admin" asp-controller="Order" asp-action="Index" class="primary-btn">Trở lại</a>
+            </div>
+        </div>
+    </div>
+
+</div>

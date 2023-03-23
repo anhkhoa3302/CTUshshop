@@ -1,0 +1,95 @@
+﻿@model CTUshshop.Models.Order
+
+@{
+    ViewData["Title"] = "Checkout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    double total = 0;
+}
+<partial name="~/Views/Shared/_HeroPartial.cshtml" />
+<partial name="~/Views/Shared/_BreadcrumbPartial.cshtml" />
+
+<!-- Checkout Section Begin -->
+<section class="checkout spad">
+    <div class="container">
+        <div class="checkout__form">
+            <h4>Chi tiết đơn hàng</h4>
+            <form asp-area="" asp-controller="Orders" asp-action="Create" method="post">
+                <div class="row">
+                    <div class="col-lg-8 col-md-6">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="checkout__input">
+                                    <p>Họ<span>*</span></p>
+                                    <input asp-for="FirstName" type="text" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="checkout__input">
+                                    <p>Tên đệm<span>*</span></p>
+                                    <input asp-for="MiddleName" type="text" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="checkout__input">
+                                    <p>Tên<span>*</span></p>
+                                    <input asp-for="LastName" type="text" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="checkout__input">
+                            <p>Địa chỉ<span>*</span></p>
+                            <input type="text" asp-for="Address" readonly class="checkout__input__add">
+                            <input type="text" name="opAdress" placeholder="Số nhà, nhà trọ...v.v (optinal)">
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="checkout__input">
+                                    <p>Phone<span>*</span></p>
+                                    <input type="text" asp-for="PhoneNumber">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="checkout__input">
+                                    <p>Email<span>*</span></p>
+                                    <input type="text" asp-for="Email" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="checkout__input">
+                            <p>Account Password<span>*</span></p>
+                            <input type="password" name="password">
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="checkout__order">
+                            <h4>Đơn hàng của bạn</h4>
+                            <div class="checkout__order__products">Sản phẩm<span>Tổng</span></div>
+                            <ul>
+                                @{
+                                    List<CartItem> cart = (List<CartItem>)ViewBag.CartItem;
+                                    foreach (var cartitem in cart)
+                                    {
+                                        var thanhtien = cartitem.Quantity * cartitem.Product.Price;
+                                        total += thanhtien;
+                                        <li>@cartitem.Product.Title<span>@(thanhtien.ToString("#,###.#"))&nbsp;<i class="fa-sharp fa-solid fa-dong-sign"></i></span></li>
+                                    }
+                                }
+                            </ul>
+                            <div class="checkout__order__products">Phụ phí<span>Tổng</span></div>
+                            <ul>
+                                <li>Shipping<span>15,000&nbsp;<i class="fa-sharp fa-solid fa-dong-sign"></i></span></li>
+                            </ul>
+                            <div class="checkout__order__total">Tổng <span>@((total+15000).ToString("#,##.##"))&nbsp;<i class="fa-sharp fa-solid fa-dong-sign"></i></span></div>
+                            <input asp-for="Total" value="@total" type="hidden" readonly />
+                            <input asp-for="GrandTotal" value="@(total+15000)" type="hidden" readonly />
+                            <input asp-for="ShippingVia" value="Thu tinh" type="hidden" readonly />
+                            <input asp-for="UserId" type="hidden" readonly />
+                            <button type="submit" class="site-btn">ĐẶT HÀNG</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+<!-- Checkout Section End -->
